@@ -1,4 +1,4 @@
-# kubernerdes.lab
+# eksa.kubernerdes.lab
 Lab environment consisting of Amazon EKS Anywhere and VMware vSphere for hosting containers and VMs
 
 ## Overview
