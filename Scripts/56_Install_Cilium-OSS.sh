@@ -89,12 +89,15 @@ helm repo update cilium
 
 ### PRE-FLIGHT CHECK
 #  Replace EKS-A version of Cilium with OSS version
+#  UPDATE: I added the ingressController for testing
 CILIUM_DEFAULT_VERSION=$(cilium version | grep "(default)" | awk -F\: '{ print $2 }' | sed 's/ //')
 helm template cilium/cilium --version $CILIUM_DEFAULT_VERSION  \
   --namespace=kube-system \
   --set preflight.enabled=true \
   --set agent=false \
   --set operator.enabled=false \
+  --set ingressController.enabled=true \
+  --set ingressController.loadbalancerMode=dedicated \
   > cilium-preflight.yaml
 kubectl create -f cilium-preflight.yaml
 
@@ -174,6 +177,15 @@ date >> cilium_connectivity_test.out
 cd -
 
 exit 0
+
+# Update Cilium and use Ingress Routing
+
+helm upgrade cilium cilium/cilium --version 1.16.5 \
+    --namespace kube-system \
+    --reuse-values \
+    --set ingressController.enabled=true \
+    --set ingressController.loadbalancerMode=dedicated
+
 
 # Troubleshooting, etc...
 
