@@ -58,7 +58,7 @@ cd ${EKS_DIR}
 mkdir $CLUSTER_NAME 
 
 # Retrieve Cluster-Specific config - this a static URL (i.e. I cannot reference $REPO as this is the file that sets the value)
-[ ! -f ENV.vars ] && { curl -o ENV.vars https://raw.githubusercontent.com/GIT_OWNER/kubernerdes.lab/main/Files/ENV.vars; }
+[ ! -f ENV.vars ] && { curl -o ENV.vars https://raw.githubusercontent.com/${GIT_OWNER}/eksa.kubernerdes.lab/refs/heads/main/Files/ENV.vars; }
 # vi ./ENV.vars
 . ./ENV.vars
 echo "Repo URL: $REPO"
@@ -106,3 +106,5 @@ while sleep 2; do echo -n "Waiting for 'Running'....then will proceed. "; date; 
 # Once cluster is built, set the KUBECONFIG (and copy it to html directory)
 export KUBECONFIG=$(find ~/eksa/$CLUSTER_NAME/latest/ -name '*eks-a-cluster.kubeconfig' | sort | tail -1)
 cp $KUBECONFIG /var/www/html/
+cp $KUBECONFIG ~/.kube
+
