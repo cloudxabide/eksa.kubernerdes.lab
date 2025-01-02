@@ -1,10 +1,9 @@
 #/bin/bash
 
-#     Purpose: To replace EKS-A included Cilium with Cilium OSS
+#     Purpose: To replace EKS-A included Cilium with Cilium OSS for Ingress
 #        Date: 2024-03-01
-#      Status: GTG, I think
-#              Ready to test (this is still a bit clunky, therefore it 
-#              should be cut-and-paste and interactively installed)
+#      Status: I am not ready - Not even close
+#
 # Assumptions:
 #        Todo: Update process to update Cilium and Hubble CLI, if needed
 #  References: https://isovalent.com/blog/post/cilium-eks-anywhere/
@@ -89,12 +88,16 @@ helm repo update cilium
 
 ### PRE-FLIGHT CHECK
 #  Replace EKS-A version of Cilium with OSS version
+#  UPDATE: I added the ingressController for testing
 CILIUM_DEFAULT_VERSION=$(cilium version | grep "(default)" | awk -F\: '{ print $2 }' | sed 's/ //')
 helm template cilium/cilium --version $CILIUM_DEFAULT_VERSION  \
   --namespace=kube-system \
   --set preflight.enabled=true \
   --set agent=false \
   --set operator.enabled=false \
+  --set ingressController.enabled=true \
+  --set ingressController.loadbalancerMode=dedicated \
+
   > cilium-preflight.yaml
 kubectl create -f cilium-preflight.yaml
 
@@ -148,7 +151,6 @@ esac
 [ -z $CILIUM_DEFAULT_VERSION ] && { CILIUM_DEFAULT_VERSION=$(cilium version | grep "(default)" | awk -F\: '{ print $2 }' | sed 's/ //'); }
 
 ## NOTE:  Prometheus add-on is not (yet) tested (2024-07-02)    
-working() {
 helm install cilium cilium/cilium --version $CILIUM_DEFAULT_VERSION \
   --namespace kube-system \
   --set eni.enabled=false \
@@ -160,23 +162,6 @@ helm install cilium cilium/cilium --version $CILIUM_DEFAULT_VERSION \
   --set hubble.metrics.enabled="{dns,drop,tcp,flow,icmp,http}" \
   --set hubble.relay.enabled=true \
   --set hubble.ui.enabled=true 
-}
-testing() {
-helm install cilium cilium/cilium --version $CILIUM_DEFAULT_VERSION \
-   --namespace kube-system \
-  --set eni.enabled=false \
-  --set ipam.mode=kubernetes \
-  --set egressMasqueradeInterfaces=$MYINTERFACE \
-  --set tunnel=geneve \
-   --set prometheus.enabled=true \
-   --set operator.prometheus.enabled=true \
-   --set hubble.enabled=true \
-   --set hubble.metrics.enableOpenMetrics=true \
-   --set hubble.metrics.enabled="{dns,drop,tcp,flow,port-distribution,icmp,httpV2:exemplars=true;labelsContext=source_ip\,source_namespace\,source_workload\,destination_ip\,destination_namespace\,destination_workload\,traffic_direction}" \
-  --set hubble.metrics.enabled="{dns,drop,tcp,flow,icmp,http}" \
-  --set hubble.relay.enabled=true \
-  --set hubble.ui.enabled=true 
-}
 
 ### Validate the install
 while sleep 2; do echo; cilium status | egrep 'error' || { echo "Great - LGTM. Let's proceed..."; break; }; done
@@ -200,6 +185,7 @@ helm upgrade cilium cilium/cilium --version 1.16.5 \
     --reuse-values \
     --set ingressController.enabled=true \
     --set ingressController.loadbalancerMode=dedicated
+
 
 # Troubleshooting, etc...
 

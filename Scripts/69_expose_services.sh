@@ -41,6 +41,8 @@ exit 0
 14981 | CoreDNS
 18283 | Kubernetes
 17813 | Trivy
+21431 | Cilium
+16613 | HubbleUI
 
 # The URL for the prometheus endpoint (to add as a Datasource for Grafana) 
 # http://prometheus-k8s.monitoring:9090
