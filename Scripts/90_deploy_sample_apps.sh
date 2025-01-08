@@ -21,7 +21,7 @@ kubectl config set-context --current --namespace=ecsdemo
 
 for PROJECT in ecsdemo-nodejs ecsdemo-crystal ecsdemo-frontend
 do 
-  [ -d $PROJECT ] && { cd $PROJECT; git pull; } || { git clone  https://github.com/GIT_OWNER/$PROJECT; cd $PROJECT; }
+  [ -d $PROJECT ] && { cd $PROJECT; git pull; } || { git clone  https://github.com/$GIT_OWNER/$PROJECT; cd $PROJECT; }
   kubectl apply -f kubernetes/deployment.yaml
   kubectl apply -f kubernetes/service.yaml
   kubectl get deployment $PROJECT
