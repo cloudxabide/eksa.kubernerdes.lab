@@ -63,7 +63,7 @@ spec:
   numCPUs: 2
   osFamily: ubuntu
   resourcePool: "${VSPHERE_RESOURCE_POOL}"
-  template: "ubuntu-2004-kube-v1.29.5" # govc ls vm/Templates
+  template: "ubuntu-2004-kube-v1.30.7" # govc ls vm/Templates
   users:
   - name: capv
     sshAuthorizedKeys:
@@ -82,7 +82,7 @@ spec:
   numCPUs: 2
   osFamily: ubuntu 
   resourcePool: "${VSPHERE_RESOURCE_POOL}"
-  template: "ubuntu-2004-kube-v1.29.5" # govc ls vm/Templates
+  template: "ubuntu-2004-kube-v1.30.7" # govc ls vm/Templates
   cloneComplete: "true"
   users:
   - name: capv
@@ -102,7 +102,7 @@ spec:
   numCPUs: 2
   osFamily: ubuntu
   resourcePool: "${VSPHERE_RESOURCE_POOL}"
-  template: "ubuntu-2004-kube-v1.29.5" # govc ls vm/Templates
+  template: "ubuntu-2004-kube-v1.30.7" # govc ls vm/Templates
   users:
   - name: capv
     sshAuthorizedKeys:
