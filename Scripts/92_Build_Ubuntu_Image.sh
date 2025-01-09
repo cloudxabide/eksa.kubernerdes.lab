@@ -134,13 +134,14 @@ manual_versioning() {
 export EKSA_RELEASE_VERSION=v0.19.0 # Manually define version
 EKSA_RELEASE_VERSION=v0.18.0; RELEASE_CHANNEL="1-28"
 EKSA_RELEASE_VERSION=v0.19.0; RELEASE_CHANNEL="1-29"
+EKSA_RELEASE_VERSION=v0.21.4; RELEASE_CHANNEL="1-30"
 }
 
 # Set some params
 export OS=ubuntu
 export OS_VERSION=22.04
 export HYPERVISOR=vsphere
-export RELEASE_CHANNEL="1-29"
+export RELEASE_CHANNEL="1-30"
 export EKSA_RELEASE_VERSION=$(curl -sL https://anywhere-assets.eks.amazonaws.com/releases/eks-a/manifest.yaml | yq ".spec.latestVersion")
 echo "EKSA_RELEASE_VERSION: $EKSA_RELEASE_VERSION"
 # BUILD_TOOLING_COMMIT=$(curl -s $BUNDLE_MANIFEST_URL | yq ".spec.versionsBundles[0].eksD.gitCommit")
