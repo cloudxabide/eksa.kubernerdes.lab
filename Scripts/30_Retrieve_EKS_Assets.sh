@@ -15,6 +15,7 @@ cd /var/www/html
 [ -f index.html ] && { sudo mv index.html index.html.orig; }
 
 sudo mkdir /var/www/html/hookos-$EKSA_RELEASE_VERSION
+rm /var/www/html/hookos-latest
 sudo ln -s /var/www/html/hookos-$EKSA_RELEASE_VERSION  /var/www/html/hookos-latest
 cd /var/www/html/hookos-latest
 echo "<HTML><BODY>I'm HERE</BODY></HTML>" | sudo tee index.html
