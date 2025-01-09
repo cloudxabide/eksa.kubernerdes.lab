@@ -1,6 +1,11 @@
 # eksa.kubernerdes.lab
 Lab environment consisting of Amazon EKS Anywhere and VMware vSphere for hosting containers and VMs
 
+## Status
+
+I am currently (2025-01-09) attempting to work a few things in to this repo
+* an architecture based on Management (vSphere) + Workload (Bare Metal) clusters
+
 ## Overview
 This implementation pattern represents an "edge deployment" facilitating a hybrid cloud architecture.  This will enabling you to run containers and virtual machines on gear that requires lower resources (space, power, cooling, etc...) in an enclave capable of being independent of external resources.
 
@@ -38,8 +43,6 @@ cd Scripts
 ```
 
 I have created the scripts using the old Init Script notation of numerically numbered files.  You can decided which ones you would like to run, or not.
-
-
 
 ## References and Notes
 | Title | Link |
