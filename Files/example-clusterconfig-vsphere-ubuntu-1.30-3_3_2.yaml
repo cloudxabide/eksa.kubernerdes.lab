@@ -62,7 +62,7 @@ spec:
   memoryMiB: 8192
   numCPUs: 2
   osFamily: ubuntu
-  resourcePool: "${VSPHERE_RESOURCE_POOL}"
+  resourcePool: "${VSPHERE_RESOURCE_POOL}" # govc find / -type p /kubecuddle/host/Kubernerdes/Resources
   template: "ubuntu-2004-kube-v1.30.7" # govc ls vm/Templates
   users:
   - name: capv
