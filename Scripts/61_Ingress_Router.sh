@@ -43,8 +43,12 @@ kubectl config set-context --current --namespace=metallb-system
 # TODO: Figure out how to dynamically retrieve this value for current version
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.7/config/manifests/metallb-native.yaml
 
-CIDR_POOL="10.10.13.1-10.10.13.32"
-CIDR_POOL="10.10.13.33-10.10.13.63"
+# Set the CIDR based on which cluster we are managing
+case $(kubectl config view --minify -o jsonpath='{.clusters[].name}') in
+  kubernerdes-eksa) CIDR_POOL="10.10.13.1-10.10.13.63";;
+  vsphere-eksa) CIDR_POOL="10.10.13.64-10.10.13.127";;
+esac
+
 cat << EOF4 | tee metallb-config.yaml
 ---
 apiVersion: metallb.io/v1beta1
