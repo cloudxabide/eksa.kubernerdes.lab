@@ -2,7 +2,7 @@
 
 #     Purpose:  Configure Ingress (metalLB and emissary)
 #        Date:  2024-07-01
-#      Status:  GTG | 
+#      Status:  GTG | MetalLB may have a hang up - hoping 30 second delay in workflow resolves issue
 # Assumptions:
 #        Todo:
 #  References:
