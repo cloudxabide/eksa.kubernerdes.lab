@@ -26,6 +26,10 @@ kubectl logs -l app=hello-eks-a -n hello-eksa-a
 kubectl -n kube-system exec ds/cilium -- cilium version
 
 ########################################
+########################################
+# Install CLI and Tools
+########################################
+########################################
 # Install Cilium CLI
 # https://docs.cilium.io/en/stable/gettingstarted/k8s-install-default/
 install_Cilium_CLI() {
@@ -79,6 +83,10 @@ esac
 hubble version; echo
 }
 ########################################
+########################################
+# Start Here
+########################################
+########################################
 
 case $(uname) in
   Darwin) echo "Please follow Foo/Kind_Cilium.md to install Cilium in Kind on your Mac"; exit 0;;
@@ -107,12 +115,12 @@ kubectl create -f cilium-preflight.yaml
 kubectl get daemonset -n kube-system | sed -n '1p;/cilium/p'
 while sleep 2; do echo; ( kubectl get daemonset -n kube-system | sed -n '1p;/cilium/p' | grep -w 0; ) || break; done
 
-# Once the daemonset is running
+# Once the daemonset is running, you can delete the preflight check
 echo "Note:  delete Cilium PreFlight Check"
 kubectl delete -f cilium-preflight.yaml
 
-### Update Cilium
-
+# Maybe I need to consider the following: https://ambar-thecloudgarage.medium.com/eks-anywhere-jiving-with-cilium-oss-and-bgp-load-balancer-12af1d10099c
+#    To deal with teh service accounts, etc...
 # NOTE - this next set of steps are a temporary workaround to clean up accounts
 clean-up-accounts() {
 kubectl delete serviceaccount cilium --namespace kube-system
@@ -135,7 +143,6 @@ kubectl delete rolebinding cilium-config-agent -n kube-system
 kubectl delete svc cilium-agent -n kube-system
 }
 clean-up-accounts
-
 
 # helm install cilium cilium/cilium --version 1.13.3 \
 # NOTE: This needs testing - I *think* this should work for *my* needs.
@@ -165,21 +172,21 @@ helm install cilium cilium/cilium --version $CILIUM_DEFAULT_VERSION \
   --set hubble.relay.enabled=true \
   --set hubble.ui.enabled=true 
 }
+# https://docs.cilium.io/en/stable/observability/grafana/
 testing() {
+CILIUM_DEFAULT_VERSION=1.16.5
 helm install cilium cilium/cilium --version $CILIUM_DEFAULT_VERSION \
-   --namespace kube-system \
-  --set eni.enabled=false \
-  --set ipam.mode=kubernetes \
+  --namespace kube-system \
   --set egressMasqueradeInterfaces=$MYINTERFACE \
-  --set tunnel=geneve \
-   --set prometheus.enabled=true \
-   --set operator.prometheus.enabled=true \
-   --set hubble.enabled=true \
-   --set hubble.metrics.enableOpenMetrics=true \
-   --set hubble.metrics.enabled="{dns,drop,tcp,flow,port-distribution,icmp,httpV2:exemplars=true;labelsContext=source_ip\,source_namespace\,source_workload\,destination_ip\,destination_namespace\,destination_workload\,traffic_direction}" \
-  --set hubble.metrics.enabled="{dns,drop,tcp,flow,icmp,http}" \
+  --set eni.enabled=false \
+  --set hubble.enabled=true \
+  --set hubble.metrics.enableOpenMetrics=true \
+  --set hubble.metrics.enabled="{dns,drop,tcp,flow,port-distribution,icmp,httpV2:exemplars=true;labelsContext=source_ip\,source_namespace\,source_workload\,destination_ip\,destination_namespace\,destination_workload\,traffic_direction}" \
   --set hubble.relay.enabled=true \
-  --set hubble.ui.enabled=true 
+  --set hubble.ui.enabled=true \
+  --set ipam.mode=kubernetes \
+  --set operator.prometheus.enabled=true \
+  --set prometheus.enabled=true 
 }
 
 ### Validate the install
