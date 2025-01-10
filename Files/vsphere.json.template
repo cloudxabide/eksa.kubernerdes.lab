@@ -1,0 +1,15 @@
+{
+  "cluster": "$VSPHERE_RESOURCE_POOL",
+  "convert_to_template": "true",
+  "create_snapshot": "true",
+  "datacenter": "$VSPHERE_DATACENTER",
+  "datastore": "$VSPHERE_DATASTORE",
+  "folder": "$VSPHERE_FOLDER",
+  "insecure_connection": "true",
+  "linked_clone": "",
+  "network": "$VSPHERE_NETWORK",
+  "password": "$EKSA_VSPHERE_PASSWORD",
+  "resource_pool": "$VSPHERE_RESOURCE_POOL",
+  "username": "$EKSA_VSPHERE_USERNAME",
+  "vcenter_server": "$VSPHERE_SERVER"
+}
