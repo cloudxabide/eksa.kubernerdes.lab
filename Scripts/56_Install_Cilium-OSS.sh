@@ -9,6 +9,7 @@
 #        Todo: Update process to update Cilium and Hubble CLI, if needed
 #  References: https://isovalent.com/blog/post/cilium-eks-anywhere/
 
+cd ~/eksa/$CLUSTER_NAME/latest/
 mkdir cilium; cd $_
 
 # Install a test app
@@ -135,16 +136,19 @@ kubectl delete svc cilium-agent -n kube-system
 }
 clean-up-accounts
 
+
 # helm install cilium cilium/cilium --version 1.13.3 \
-case $(uname) in
-  Darwin)
-    MYINTERFACE=eth0
-  ;;
-  Linux)
-    # Ubuntu
-    MYINTERFACE=eno1
-  ;;
+# NOTE: This needs testing - I *think* this should work for *my* needs.
+# Bare Metal Ubuntu: eno1
+# VMware + Ubuntu ~= eth0
+# Docker/KIND = eth0
+# Set the Interface Namee based on which cluster we are managing
+case $(kubectl config view --minify -o jsonpath='{.clusters[].name}') in
+  kubernerdes-eksa) MYINTERFACE=eno1;;
+  vsphere-eksa) MYINTERFACE=eth0;;
+  *) MYINTERFACE=eth0;;
 esac
+
 [ -z $CILIUM_DEFAULT_VERSION ] && { CILIUM_DEFAULT_VERSION=$(cilium version | grep "(default)" | awk -F\: '{ print $2 }' | sed 's/ //'); }
 
 ## NOTE:  Prometheus add-on is not (yet) tested (2024-07-02)    
