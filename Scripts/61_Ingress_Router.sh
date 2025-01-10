@@ -73,7 +73,7 @@ EOF4
 
 # NOTE:  make sure that this runs successfully - I have seen it fail at times (and I am not sure why)
 #  if it does, just rerun
-sleep 10
+sleep 30
 kubectl apply -f metallb-config.yaml
 cd -
 kubectl config set-context --current --namespace=default
