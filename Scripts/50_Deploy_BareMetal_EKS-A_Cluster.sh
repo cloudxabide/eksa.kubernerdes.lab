@@ -67,10 +67,10 @@ echo "Repo URL: $REPO"
 eksctl anywhere generate clusterconfig $CLUSTER_NAME --provider tinkerbell > $CLUSTER_CONFIG.default
 
 # However, I have one that I have already modified for this cluster
-curl -o $CLUSTER_CONFIG.vanilla ${REPO}main/Files/$CLUSTER_CONFIG_SOURCE
+curl -o $CLUSTER_CONFIG.vanilla ${REPO}refs/heads/main/Files/$CLUSTER_CONFIG_SOURCE
 
 # Retrieve the hardware inventory csv file (custom to environment)
-curl -o hardware.csv ${REPO}main/Files/hardware-${NODE_LAYOUT}.csv
+curl -o hardware.csv ${REPO}refs/heads/main/Files/hardware-${NODE_LAYOUT}.csv
 cat hardware.csv
 
 # Retrieve the SSH pub key for the "kubernerdes.lab" domain (this will be needed once cluster has deployed)
@@ -85,6 +85,10 @@ sudo systemctl stop isc-dhcp-server.service
 unset KUBECONFIG
 eksctl anywhere create cluster \
   --hardware-csv hardware.csv \
+   -f  $CLUSTER_CONFIG
+
+# Use the following to create a workload cluster (with KUBECONFIG pointing to management cluster)
+  --kubeconfig=$KUBECONFIG \
    -f  $CLUSTER_CONFIG
 
 # Once the cluster has completed its deployment
