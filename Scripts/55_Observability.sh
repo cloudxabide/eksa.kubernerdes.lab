@@ -10,6 +10,9 @@
 # https://github.com/prometheus-operator/prometheus-operator
 # https://github.com/prometheus-operator/kube-prometheus
 
+############### ############### ############### ###############
+## Install Prometheus
+cd ~/eksa/$CLUSTER_NAME/latest
 kubectl config set-context --current --namespace=default
 
 git clone https://github.com/prometheus-operator/kube-prometheus.git
@@ -24,7 +27,7 @@ kubectl apply -f manifests/
 while sleep 2; echo; do kubectl get all -n monitoring | egrep 'ContainerCreating|Init' || break; done
 cd -
 
-############### ###############
+############### ############### ############### ###############
 ## Install Grafana
 GRAFANA_NAMESPACE=monitoring
 SERVICE=my-grafana
@@ -48,7 +51,7 @@ helm upgrade my-grafana grafana/grafana -f my-grafana-storage.yaml -n $GRAFANA_N
 cd -
 while sleep 2; echo; do kubectl get all -n monitoring | egrep 'ContainerCreating|Init' || break; done
 
-############### ###############
+############### ############### ############### ###############
 ## Kubernetes Dashbaord (WIP)
 # https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
