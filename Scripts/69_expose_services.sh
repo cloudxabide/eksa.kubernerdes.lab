@@ -2,7 +2,7 @@
 
 #     Purpose:  Expose a few services with "external IPs" using LoadBalancer
 #        Date:  2024-05-16
-#      Status:  GTG |  
+#      Status:  GTG | Needs work.  I need to figure out how to pass the IPADDR var in to the kubectl patch command
 # Assumptions:  Services referenced here were deployed using this steps in this repo
 #                 i.e. service name, namespace, port - have to align with values in "ServiceMap" (below)
 #        Todo: Need to work on this and figure out how to assign pre-determined addresses to service
@@ -15,18 +15,24 @@ mkdir service_exposure; cd $_
 SERVICEMAPFILE=./SERVICEMAP.csv
 cat << EOF2 | tee $SERVICEMAPFILE
 #APPNAME|NAMESPACE|PORT
-prometheus-k8s|monitoring|9090
-prometheus-adapter|monitoring|443
-my-grafana|monitoring|80
-hubble-ui|kube-system|80
-trivy-operator|trivy-system|80
+prometheus-k8s|monitoring|9090|10.10.13.3
+prometheus-adapter|monitoring|443|10.10.13.4
+my-grafana|monitoring|80|10.10.13.5
+hubble-ui|kube-system|80|10.10.13.6
+trivy-operator|trivy-system|80|10.10.13.7
 EOF2
 
-grep -v \# $SERVICEMAPFILE | awk -F"|" '{ print $1" "$2 }' | while read -r APPNAME NAMESPACE PORT
+grep -v \# $SERVICEMAPFILE | awk -F"|" '{ print $1" "$2" "$3" "$4 }' | while read -r APPNAME NAMESPACE PORT IPADDR
 do
-  #echo "$APPNAME $NAMESPACE $PORT"
+  echo "$APPNAME $NAMESPACE $PORT $IPADDR"
   echo "kubectl patch svc $APPNAME -n $NAMESPACE -p '{\"spec\": {\"type\": \"LoadBalancer\"}}'"
   kubectl patch svc $APPNAME -n $NAMESPACE -p '{"spec": {"type": "LoadBalancer"}}'
+
+  #echo "# kubectl patch svc $APPNAME -n $NAMESPACE -p '{\"spec\": {\"type\": \"ClusterIP\"}}'"
+  # kubectl patch svc $APPNAME -n $NAMESPACE -p '{"spec": {"type": "ClusterIP"}}'
+
+  #echo "# kubectl patch svc $APPNAME -n $NAMESPACE -p '{\"spec\": {\"type\": \"LoadBalancer\", \"loadBalancerIP\": \"$IPADDR\"}}'"
+  #kubectl patch svc $APPNAME -n $NAMESPACE -p '{"spec": {"type": "LoadBalancer", "loadBalancerIP": "$IPADDR"}}'
   echo
 done
 
@@ -41,8 +47,8 @@ exit 0
 14981 | CoreDNS
 18283 | Kubernetes
 17813 | Trivy
-21431 | Cilium
-16613 | HubbleUI
+21431 | Cilium (use the Cilium Grafana/Prometheus)
+16613 | HubbleUI (use the Cilium Grafana/Prometheus)
 
 # The URL for the prometheus endpoint (to add as a Datasource for Grafana) 
 # http://prometheus-k8s.monitoring:9090
