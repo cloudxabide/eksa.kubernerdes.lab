@@ -202,6 +202,11 @@ cilium connectivity test >> cilium_connectivity_test.out
 date >> cilium_connectivity_test.out
 cd -
 
+# Install Cilium/Hubble enabled Prometheus/Grafana
+kubectl apply -f https://raw.githubusercontent.com/cilium/cilium/v1.12/examples/kubernetes/addons/prometheus/monitoring-example.yaml
+kubectl patch svc grafana -n cilium-monitoring -p '{"spec": {"type": "LoadBalancer"}}'
+
+
 exit 0
 
 # Update Cilium and use Ingress Routing
