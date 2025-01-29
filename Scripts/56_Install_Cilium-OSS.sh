@@ -9,22 +9,6 @@
 #        Todo: Update process to update Cilium and Hubble CLI, if needed
 #  References: https://isovalent.com/blog/post/cilium-eks-anywhere/
 
-cd ~/eksa/$CLUSTER_NAME/latest/
-mkdir cilium; cd $_
-
-# Install a test app
-kubectl create namespace hello-eksa-a
-kubectl apply -f "https://anywhere.eks.amazonaws.com/manifests/hello-eks-a.yaml" -n hello-eksa-a
-kubectl get pods -l app=hello-eks-a -n hello-eksa-a
-sleep 5
-kubectl logs -l app=hello-eks-a -n hello-eksa-a
-# kubectl port-forward deploy/hello-eks-a 8000:80
-# curl localhost:8000
-
-# From: https://docs.cilium.io/en/v1.13/gettingstarted/k8s-install-default/#install-the-cilium-cli
-# Check the default/included Cilium 
-kubectl -n kube-system exec ds/cilium -- cilium version
-
 ########################################
 ########################################
 # Install CLI and Tools
@@ -82,11 +66,14 @@ case $(uname) in
 esac
 hubble version; echo
 }
+
 ########################################
 ########################################
 # Start Here
 ########################################
 ########################################
+cd ~/eksa/$CLUSTER_NAME/latest/
+mkdir cilium; cd $_
 
 case $(uname) in
   Darwin) echo "Please follow Foo/Kind_Cilium.md to install Cilium in Kind on your Mac"; exit 0;;
@@ -165,7 +152,6 @@ helm install cilium cilium/cilium --version $CILIUM_DEFAULT_VERSION \
   --set eni.enabled=false \
   --set ipam.mode=kubernetes \
   --set egressMasqueradeInterfaces=$MYINTERFACE \
-  --set tunnel=geneve \
   --set prometheus.enabled=true \
   --set operator.prometheus.enabled=true \
   --set hubble.metrics.enabled="{dns,drop,tcp,flow,icmp,http}" \
@@ -197,15 +183,17 @@ while sleep 2; do { echo "Waiting for connectivity..."; kubectl -n kube-system e
 
 ## Test Cilium Connectivity
 echo "Running Cilium Connectivity Test - This will take a few minutes." 
+echo "You can tail the output by running: "
+echo "tail -f `pwd`/cilium_connectivity_test.out"
 date  > cilium_connectivity_test.out
 cilium connectivity test >> cilium_connectivity_test.out
 date >> cilium_connectivity_test.out
-cd -
 
 # Install Cilium/Hubble enabled Prometheus/Grafana
 kubectl apply -f https://raw.githubusercontent.com/cilium/cilium/v1.12/examples/kubernetes/addons/prometheus/monitoring-example.yaml
 kubectl patch svc grafana -n cilium-monitoring -p '{"spec": {"type": "LoadBalancer"}}'
 
+cd -
 
 exit 0
 
