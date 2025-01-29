@@ -188,6 +188,7 @@ echo "tail -f `pwd`/cilium_connectivity_test.out"
 date  > cilium_connectivity_test.out
 cilium connectivity test >> cilium_connectivity_test.out
 date >> cilium_connectivity_test.out
+kubectl delete namespace cilium-test-1
 
 # Install Cilium/Hubble enabled Prometheus/Grafana
 kubectl apply -f https://raw.githubusercontent.com/cilium/cilium/v1.12/examples/kubernetes/addons/prometheus/monitoring-example.yaml
