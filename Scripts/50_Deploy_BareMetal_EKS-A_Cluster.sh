@@ -58,7 +58,7 @@ cd ${EKS_DIR}
 mkdir $CLUSTER_NAME 
 
 # Retrieve Cluster-Specific config - this a static URL (i.e. I cannot reference $REPO as this is the file that sets the value)
-[ ! -f ENV.vars ] && { curl -o ENV.vars https://raw.githubusercontent.com/${GIT_OWNER}/eksa.kubernerdes.lab/refs/heads/main/Files/ENV.vars; }
+[ ! -f ENV.vars ] && { curl -o ENV.vars https://raw.githubusercontent.com/cloudxabide/eksa.kubernerdes.lab/refs/heads/main/Files/ENV.vars; }
 # vi ./ENV.vars
 . ./ENV.vars
 echo "Repo URL: $REPO"
