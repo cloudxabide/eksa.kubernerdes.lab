@@ -72,6 +72,7 @@ spec:
 EOF4
 
 # NOTE:  make sure that this runs successfully - I have seen it fail at times (and I am not sure why)
+#   I cannot figure out how to add a logic-gate here to wait for the correct conditions before proceeding (or.. maybe to retry until successful?)
 #  if it does, just rerun
 sleep 30
 kubectl apply -f metallb-config.yaml
