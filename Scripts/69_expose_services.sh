@@ -49,7 +49,8 @@ exit 0
 1860 | Node Exporter Full
 14981 | CoreDNS
 18283 | Kubernetes
-17813 | Trivy
+
+17813 | Trivy (this doesn't seem to work)
 21431 | Cilium (use the Cilium Grafana/Prometheus)
 16613 | HubbleUI (use the Cilium Grafana/Prometheus)
 
