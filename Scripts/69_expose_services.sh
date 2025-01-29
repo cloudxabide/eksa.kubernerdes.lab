@@ -24,13 +24,16 @@ EOF2
 
 grep -v \# $SERVICEMAPFILE | awk -F"|" '{ print $1" "$2" "$3" "$4 }' | while read -r APPNAME NAMESPACE PORT IPADDR
 do
+  # Expose using LoadBalancer
   echo "$APPNAME $NAMESPACE $PORT $IPADDR"
   echo "kubectl patch svc $APPNAME -n $NAMESPACE -p '{\"spec\": {\"type\": \"LoadBalancer\"}}'"
   kubectl patch svc $APPNAME -n $NAMESPACE -p '{"spec": {"type": "LoadBalancer"}}'
 
+  # Expose using ClusterIP 
   #echo "# kubectl patch svc $APPNAME -n $NAMESPACE -p '{\"spec\": {\"type\": \"ClusterIP\"}}'"
   # kubectl patch svc $APPNAME -n $NAMESPACE -p '{"spec": {"type": "ClusterIP"}}'
 
+  # Expose using LoadBalancer but provide the IP Address (not sure this works)
   #echo "# kubectl patch svc $APPNAME -n $NAMESPACE -p '{\"spec\": {\"type\": \"LoadBalancer\", \"loadBalancerIP\": \"$IPADDR\"}}'"
   #kubectl patch svc $APPNAME -n $NAMESPACE -p '{"spec": {"type": "LoadBalancer", "loadBalancerIP": "$IPADDR"}}'
   echo
