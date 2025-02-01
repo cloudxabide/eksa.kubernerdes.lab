@@ -16,12 +16,13 @@
  * 
  * Note/Warning:  This script is just intended for lab usage.  I would NOT do this on a production cluster,
  *                  or in an environment with sensitive data. 
+ *                Also, I am not nec. a "coder".  Use at your own risk.  I do ;-)
  *
  * Change log:
  * 2025-01-29 - v1.0.0: Initial release
  */
 
-// Your PHP code starts here
+// PHP code starts here
 
 $kubeconfig="/var/www/kubernerdes-eksa-eks-a-cluster.kubeconfig";
 putenv ("KUBECONFIG=$kubeconfig");
