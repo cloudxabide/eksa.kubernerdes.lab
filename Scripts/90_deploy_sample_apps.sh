@@ -16,6 +16,23 @@
 cd ${HOME}/eksa/$CLUSTER_NAME/latest
 mkdir ecsdemo; cd $_
 
+container_build() {
+## Assumptions:
+##   the directory you cd to, is named for the project
+PROJECTS="ecsdemo-crystal ecsdemo-frontend ecsdemo-nodejs"
+
+for PROJECT in $PROJECTS
+do
+  cd (PROJECT)
+  docker build --platform linux/amd64 -t $(basename `pwd`) .
+  docker tag $(basename `pwd`) $GIT_OWNER/$(basename `pwd`)
+  # You may need/want to add ":latest" to the tag
+  # docker tag $(basename `pwd`) $GIT_OWNER/$(basename `pwd`):latest
+  docker push $_
+  cd -
+done
+}
+
 kubectl create ns ecsdemo
 kubectl config set-context --current --namespace=ecsdemo
 
@@ -28,6 +45,11 @@ do
   cd -
 done
 
+# Hostname (if using EKS)
+URL=$(kubectl get service/ecsdemo-frontend -n ecsdemo -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+echo -e "Browse to \nhttp://$URL"
+
+# IP (if using EKS Anywhere)
 FRONTEND_IP=$(kubectl get service ecsdemo-frontend -o json | jq -r '.status.loadBalancer.ingress[].ip')
 echo "Access FrontEnd at: http://$FRONTEND_IP/"
 
