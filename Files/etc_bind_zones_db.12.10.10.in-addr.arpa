@@ -15,6 +15,7 @@ $TTL    86400
 
 ; Admin Host
 10      IN      PTR     thekubernerd.kubernerdes.lab.
+11	IN	PTR	builder.kubernerdes.lab.
 
 ; Jetsons Lab Hosts
 20	IN	PTR	xaviar.kubernerdes.lab.
@@ -59,3 +60,10 @@ $TTL    86400
 148    IN     PTR 	eks-vmw-08.kubernerdes.lab.
 149    IN     PTR 	eks-vmw-09.kubernerdes.lab.
 
+; EKS Hybrid Nodes
+161 	IN	PTR	eks-hybrid-01.kubernerdes.lab.
+
+; NVIDIA Jetson Xavier Trio
+211	IN	PTR	xavier-01.kubernerdes.lab.
+212	IN	PTR	xavier-02.kubernerdes.lab.
+213	IN	PTR	xavier-03.kubernerdes.lab.
