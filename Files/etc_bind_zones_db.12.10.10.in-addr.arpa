@@ -71,6 +71,7 @@ $TTL    86400
 184     IN      PTR     k3s-agent-01.kubernerdes.lab.
 185     IN      PTR     k3s-agent-02.kubernerdes.lab.
 186     IN      PTR     k3s-agent-03.kubernerdes.lab.
+189     IN      PTR     k3s-ingress-01.kubernerdes.lab.
 
 ; NVIDIA Jetson Xavier Trio
 211	IN	PTR	xavier-01.kubernerdes.lab.
