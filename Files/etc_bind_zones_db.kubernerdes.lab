@@ -1,7 +1,7 @@
 $ORIGIN kubernerdes.lab.
 $TTL    86400
 @       IN      SOA     thekubernerd.kubernerdes.lab. root.kubernerdes.lab. (
-                        2024032201   ; Serial
+                        2025020201   ; Serial
                         604800       ; Refresh
                         86400        ; Retry
                         36000        ; Expire
@@ -16,6 +16,7 @@ airport			IN      A       10.10.12.2
 
 ; Admin Host
 thekubernerd		IN      A       10.10.12.10
+builder			IN      A       10.10.12.11
 
 ; Jetsons Lab Hosts
 xavier			IN	A	10.10.12.20
@@ -60,6 +61,22 @@ eks-vmw-07		IN      A       10.10.12.147
 eks-vmw-08		IN      A       10.10.12.148
 eks-vmw-09		IN      A       10.10.12.149
 
+; EKS Hybrid Nodes
+eks-hybrid-01		IN	A	10.10.12.161
+
+; K3s cluster
+180     IN      PTR     k3s-api-01.kubernerdes.lab.
+181     IN      PTR     k3s-server-01.kubernerdes.lab.
+182     IN      PTR     k3s-server-02.kubernerdes.lab.
+183     IN      PTR     k3s-server-02.kubernerdes.lab.
+184     IN      PTR     k3s-agent-01.kubernerdes.lab.
+185     IN      PTR     k3s-agent-02.kubernerdes.lab.
+186     IN      PTR     k3s-agent-03.kubernerdes.lab.
+
+; NVIDIA Jetson Xavier Trio
+xavier-01		IN	A	10.10.12.211
+xavier-02		IN	A	10.10.12.212
+xavier-03		IN	A	10.10.12.213
 
 kubernerdes-eksa	IN	CNAME	eks-mgmt-control-plane.kubernerdes.lab.
 gpu-cluster		IN	CNAME	eks-gpu-control-plane.kubernerdes.lab.

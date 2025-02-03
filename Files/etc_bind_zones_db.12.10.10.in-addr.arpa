@@ -1,7 +1,7 @@
 $ORIGIN 12.10.10.in-addr.arpa.
 $TTL    86400 
 @       IN      SOA     thekubernerd.kubernerdes.lab. root.kubernerdes.lab. (
-                        2024032201   ; Serial
+                        2025020201   ; Serial
                         604800       ; Refresh
                         86400        ; Retry
                         36000        ; Expire
@@ -62,6 +62,15 @@ $TTL    86400
 
 ; EKS Hybrid Nodes
 161 	IN	PTR	eks-hybrid-01.kubernerdes.lab.
+
+; K3s cluster
+180     IN      PTR     k3s-mgmt-api.kubernerdes.lab.
+181     IN      PTR     k3s-server-01.kubernerdes.lab.
+182     IN      PTR     k3s-server-02.kubernerdes.lab.
+183     IN      PTR     k3s-server-02.kubernerdes.lab.
+184     IN      PTR     k3s-agent-01.kubernerdes.lab.
+185     IN      PTR     k3s-agent-02.kubernerdes.lab.
+186     IN      PTR     k3s-agent-03.kubernerdes.lab.
 
 ; NVIDIA Jetson Xavier Trio
 211	IN	PTR	xavier-01.kubernerdes.lab.
