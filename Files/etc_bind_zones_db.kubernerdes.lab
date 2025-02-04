@@ -65,14 +65,14 @@ eks-vmw-09		IN      A       10.10.12.149
 eks-hybrid-01		IN	A	10.10.12.161
 
 ; K3s cluster
-180     IN      PTR     k3s-mgmt-api.kubernerdes.lab.
-181     IN      PTR     k3s-server-01.kubernerdes.lab.
-182     IN      PTR     k3s-server-02.kubernerdes.lab.
-183     IN      PTR     k3s-server-02.kubernerdes.lab.
-184     IN      PTR     k3s-agent-01.kubernerdes.lab.
-185     IN      PTR     k3s-agent-02.kubernerdes.lab.
-186     IN      PTR     k3s-agent-03.kubernerdes.lab.
-189     IN      PTR     k3s-ingress-01.kubernerdes.lab.
+k3s-mgmt-api 		IN 	A 	10.10.12.180
+k3s-server-01 		IN 	A 	10.10.12.181
+k3s-server-02 		IN 	A 	10.10.12.182
+k3s-server-02 		IN 	A 	10.10.12.183
+k3s-agent-01 		IN 	A 	10.10.12.184
+k3s-agent-02 		IN 	A 	10.10.12.185
+k3s-agent-03 		IN 	A 	10.10.12.186
+k3s-ingress-01 		IN 	A 	10.10.12.189
 
 ; NVIDIA Jetson Xavier Trio
 xavier-01		IN	A	10.10.12.211
