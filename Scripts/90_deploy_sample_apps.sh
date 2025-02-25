@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #     Purpose:  Deploy the ECS demo 3-tier App
 #        Date:  2025-01-31
