@@ -41,7 +41,8 @@ kubectl apply -f metallb-ns.yaml
 kubectl config set-context --current --namespace=metallb-system
 
 # TODO: Figure out how to dynamically retrieve this value for current version
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.7/config/manifests/metallb-native.yaml
+METALLB_VERSION=v0.14.9
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/${METALLB_VERSION}/config/manifests/metallb-native.yaml
 
 # Set the CIDR based on which cluster we are managing
 case $(kubectl config view --minify -o jsonpath='{.clusters[].name}') in
