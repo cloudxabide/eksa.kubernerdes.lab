@@ -143,10 +143,8 @@ case $(kubectl config view --minify -o jsonpath='{.clusters[].name}') in
   *) MYINTERFACE=eth0;;
 esac
 
-[ -z $CILIUM_DEFAULT_VERSION ] && { CILIUM_DEFAULT_VERSION=$(cilium version | grep "(default)" | awk -F\: '{ print $2 }' | sed 's/ //'); }
-
 ## NOTE:  Prometheus add-on is not (yet) tested (2024-07-02)    
-working() {
+install_cilium_working() {
 helm install cilium cilium/cilium --version $CILIUM_DEFAULT_VERSION \
   --namespace kube-system \
   --set eni.enabled=false \
@@ -159,7 +157,7 @@ helm install cilium cilium/cilium --version $CILIUM_DEFAULT_VERSION \
   --set hubble.ui.enabled=true 
 }
 # https://docs.cilium.io/en/stable/observability/grafana/
-testing() {
+install_cilium_testing() {
 CILIUM_DEFAULT_VERSION=1.16.5
 helm install cilium cilium/cilium --version $CILIUM_DEFAULT_VERSION \
   --namespace kube-system \
@@ -174,6 +172,9 @@ helm install cilium cilium/cilium --version $CILIUM_DEFAULT_VERSION \
   --set operator.prometheus.enabled=true \
   --set prometheus.enabled=true 
 }
+
+[ -z $CILIUM_DEFAULT_VERSION ] && { CILIUM_DEFAULT_VERSION=$(cilium version | grep "(default)" | awk -F\: '{ print $2 }' | sed 's/ //'); }
+install_cilium_working
 
 ### Validate the install
 while sleep 2; do echo; cilium status | egrep 'error' || { echo "Great - LGTM. Let's proceed..."; break; }; done
