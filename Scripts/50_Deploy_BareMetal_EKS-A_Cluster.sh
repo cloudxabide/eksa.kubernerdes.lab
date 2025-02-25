@@ -109,6 +109,6 @@ while sleep 2; do echo -n "Waiting for 'Running'....then will proceed. "; date; 
 
 # Once cluster is built, set the KUBECONFIG (and copy it to html directory)
 export KUBECONFIG=$(find ~/eksa/$CLUSTER_NAME/latest/ -name '*eks-a-cluster.kubeconfig' | sort | tail -1)
-cp $KUBECONFIG /var/www/html/
+cp $KUBECONFIG /var/www/
 cp $KUBECONFIG ~/.kube
 
