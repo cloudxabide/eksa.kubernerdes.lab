@@ -22,10 +22,12 @@ sudo systemctl enable --now ufw
 
 # Update the index page to be a dynamic version run in PHP
 sudo curl -o /var/www/html/index.php ${REPO}main/Files/index.php
+sudo curl -o /var/www/html/services.php ${REPO}main/Files/var_www_html_services.php
 sudo curl -o /var/www/html/favicon.ico https://raw.githubusercontent.com/cloudxabide/kubernerdes.lab/refs/heads/main/Images/favicon.ico
 sudo chown -R www-data:www-data /var/www
 sudo chmod -R g+rwx /var/www
 sudo systemctl enable apache2 --now
+sudo systemctl restart apache2
 exit 0
 
 # NOTE:  you can now browse http://10.10.12.10:8080/
