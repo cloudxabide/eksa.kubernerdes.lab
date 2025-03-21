@@ -107,12 +107,15 @@ install_desktop() {
 
 # Create directories to clone this project repo to (for pull-only access - and this optional)
 mkdir -p $HOME/Repositories/Personal/$GIT_OWNER/; cd $_
-git clone https://github.com/$GIT_OWNER/kubernerdes.lab.git
-ln -s $HOME/Repositories/Personal/$GIT_OWNER/kubernerdes.lab $HOME
+git clone https://github.com/$GIT_OWNER/eksa.kubernerdes.lab.git
+ln -s $HOME/Repositories/Personal/$GIT_OWNER/eksa.kubernerdes.lab $HOME
 cd $HOME
 
 # Install Trivy (from Aquasecurity)
 sudo snap install trivy
+
+# Create an "Environment Variables" file 
+[ ! -f ENV.vars ] && { curl -o ENV.vars https://raw.githubusercontent.com/cloudxabide/eksa.kubernerdes.lab/refs/heads/main/Files/ENV.vars; }
 
 [ $NEEDSRESTART -ne 0 ] && { echo "Rebooting in 5 seconds (hit CTRL-C to stop)"; sleep 5; shutdown now -r; }
 exit 0
