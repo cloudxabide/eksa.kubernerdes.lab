@@ -36,10 +36,11 @@ export OS="$(uname -s | tr A-Z a-z)" ARCH=$(test "$(uname -m)" = 'x86_64' && ech
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/${OS}/${ARCH}/kubectl"
 sudo install -m 0755 ./kubectl /usr/local/bin/kubectl
 
-echo "Note:  these should all return a version (and not be blank)"
-echo "aws-cli version: $(aws --version)"; echo
-echo "eksctl version: $(eksctl version)"; echo
-echo "eksctl anywhere version: $(eksctl anywhere version)"; echo
+echo "Note:  these should all return a version (and not be blank)
+aws-cli version: $(aws --version)
+eksctl version: $(eksctl version)
+eksctl anywhere version: $(eksctl anywhere version)"
+echo
 echo "kubectl version: $(kubectl version) -- Note:  this will likely throw a warning.  That is OK at this point"; echo
 
 exit 0
