@@ -93,6 +93,7 @@ eksctl anywhere create cluster \
 
 # Once the cluster has completed its deployment
 export KUBECONFIG=$(find $PWD/ -name "*kubeconfig")
+[ ! -d ${HOME}/.kube/ ] && mkdir ${HOME}/.kube/
 cp $KUBECONFIG ${HOME}/.kube/
 
 exit 0
@@ -109,6 +110,6 @@ while sleep 2; do echo -n "Waiting for 'Running'....then will proceed. "; date; 
 
 # Once cluster is built, set the KUBECONFIG (and copy it to html directory)
 export KUBECONFIG=$(find ~/eksa/$CLUSTER_NAME/latest/ -name '*eks-a-cluster.kubeconfig' | sort | tail -1)
-cp $KUBECONFIG /var/www/
+cp $KUBECONFIG /var/www/ && chmod 0644 /var/www/$KUBECONFIG
 cp $KUBECONFIG ~/.kube
 
