@@ -18,7 +18,7 @@
 # https://docs.cilium.io/en/stable/gettingstarted/k8s-install-default/
 install_Cilium_CLI() {
 cilium version; echo
-CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable-v0.14.txt)
+CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
 #CLI_ARCH=amd64
 case $(uname -m) in 
   aarch64) CLI_ARCH=arm64;;
