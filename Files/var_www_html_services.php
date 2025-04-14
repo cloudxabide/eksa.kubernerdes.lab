@@ -24,7 +24,7 @@
 
 // PHP code starts here
 
-$kubeconfig="/var/www/kubernerdes-eksa-eks-a-cluster.kubeconfig";
+$kubeconfig="/var/www/kubeconfig";
 putenv ("KUBECONFIG=$kubeconfig");
 
 $services_output = shell_exec('kubectl get services -A -o jsonpath=\'{range .items[?(@.spec.type=="LoadBalancer")]}{.metadata.name}{"\t"}{.status.loadBalancer.ingress[0].ip}{"\t"}{.spec.ports[0].port}{"\n"}{end}\'');
