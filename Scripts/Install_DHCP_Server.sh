@@ -9,6 +9,9 @@
 # Install the ISC DHCP Server package
 sudo apt install -y isc-dhcp-server
 
+# Disable/mask any notification about subnets that are not configured
+sed -i -e 's/INTERFACESv4=""/INTERFACESv4="eno1"/g' /etc/default/isc-dhcp-server
+
 sudo cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf.orig
 curl https://raw.githubusercontent.com/cloudxabide/eksa.kubernerdes.lab/refs/heads/main/Files/etc_dhcp_dhcpd.conf | sudo tee /etc/dhcp/dhcpd.conf
 curl https://raw.githubusercontent.com/cloudxabide/eksa.kubernerdes.lab/refs/heads/main/Files/etc_dhcp_dhcpd-hosts.conf | sudo tee /etc/dhcp/dhcpd-hosts.conf
