@@ -10,7 +10,7 @@
 #              /var/www/html :80 
 
 # Install the Apache2 packages
-sudo apt install -y apache2 php libapache2-mod-php php-mysql
+sudo apt install -y apache2 php libapache2-mod-php php-mysql php-yaml
 
 # Configure Apache to listen to 8080 as well as 80
 sudo sed -i -e 's/Listen 80/Listen 80\nListen 8080/g' /etc/apache2/ports.conf
