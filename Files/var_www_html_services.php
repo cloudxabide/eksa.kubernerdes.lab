@@ -21,11 +21,55 @@
  * Change log:
  * 2025-01-29 - v1.0.0: Initial release
  */
+?>
 
+<HTML>
+<HEAD>
+  <TITLE>Kubernerdes Services | &#169 2025 </TITLE>
+  <META http-equiv="refresh" content="2; url=./services.php">
+  <LINK REL="stylesheet" HREF="./styles.css" TYPE="text/css"> 
+</HEAD>
+
+<BODY>
+
+<?php
 // PHP code starts here
 
-$kubeconfig="/var/www/kubeconfig";
+$kubeconfigdir="/var/www/.kube/";
+$kubeconfig="/var/www/.kube/kubeconfig";
 putenv ("KUBECONFIG=$kubeconfig");
+
+echo "<TABLE border=0><TH COLSPAN=4>Kubernerdes Cluster Dashboard</TH> \n";
+echo "<TR>";
+// ********************************************************************
+// Retrieve the Cluster name from the contexts and display it as a header
+$config = yaml_parse_file($kubeconfig);
+if (!isset($config['contexts']) || !is_array($config['contexts'])) {
+  throw new Exception("No contexts found in file");
+}
+
+foreach ($config['contexts'] as $context) {
+  if (isset($context['context']['cluster'])) {
+    $clusters[] = $context['context']['cluster'];
+  }
+}
+
+$results[basename($kubeconfig)] = $clusters;
+
+// Print results
+foreach ($results as $filename => $clusters) {
+    if (is_array($clusters)) {
+        echo "<TD><H1> Cluster: " . implode("\n ", $clusters) . "</H1></TD> <BR> \n";
+    } else {
+        echo "$clusters \n <BR>";
+    }
+    echo "<TR>";
+    echo "<TD><H2>File: $filename </H2></TD> <BR> \n";
+    echo "<BR> \n";
+}
+echo "</TR>\n";
+echo "</TABLE>\n";
+// ********************************************************************
 
 $services_output = shell_exec('kubectl get services -A -o jsonpath=\'{range .items[?(@.spec.type=="LoadBalancer")]}{.metadata.name}{"\t"}{.status.loadBalancer.ingress[0].ip}{"\t"}{.spec.ports[0].port}{"\n"}{end}\'');
 
@@ -61,15 +105,14 @@ foreach ($lines as $line) {
         );
     }
 }
-echo "<HTML><HEAD><TITLE>Kubernerdes Services | &#169 2025 </TITLE><meta http-equiv=\"refresh\" content=\"10; url=./services.php\"></HEAD> \n";
-echo "<BODY> \n";
+
 echo "<TABLE border=1><TH COLSPAN=4>Kubernerdes Services and Endpoints </TH> \n";
 // Print the parsed results
     echo "<TR>";
-    echo "<TD>service name</TD>";
-    echo "<TD>IP Address</TD> ";
-    echo "<TD>port</TD>"; 
-    echo "<TD>URL</TD>"; 
+    echo "<TD><b>service name</TD>";
+    echo "<TD><b>IP Address</TD> ";
+    echo "<TD><b>port</TD>"; 
+    echo "<TD><b>URL</TD>"; 
     echo "</TR>\n";
 
 foreach ($parsed_hosts as $index => $host) {

@@ -1,0 +1,48 @@
+#!/usr/bin/env python3
+import csv
+import sys
+
+def lint_csv(file_path):
+    line_number = 0
+    errors = []
+
+    with open(file_path, 'r') as csvfile:
+        csv_reader = csv.reader(csvfile)
+
+        for row in csv_reader:
+            line_number += 1
+            num_values = len(row)
+
+            if num_values not in [8, 11]:
+                errors.append(f"Error on line {line_number}: Expected 8 or 11 values, but found {num_values}")
+
+    return errors
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: python linter.py <path_to_hardware.csv>")
+        sys.exit(1)
+
+    file_path = sys.argv[1]
+
+    try:
+        errors = lint_csv(file_path)
+
+        if errors:
+            print("Linting errors found:")
+            for error in errors:
+                print(error)
+            sys.exit(1)
+        else:
+            print("Linting passed. No errors found.")
+            sys.exit(0)
+
+    except FileNotFoundError:
+        print(f"Error: File '{file_path}' not found.")
+        sys.exit(1)
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()

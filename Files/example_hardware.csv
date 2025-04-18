@@ -1,0 +1,2 @@
+hostname1,mac,ip_address,netmask,gateway,nameservers,labels,disk
+hostname3,bmc_ip,bmc_username,bmc_password,mac,ip_address,netmask,gateway,nameservers,labels,disk
