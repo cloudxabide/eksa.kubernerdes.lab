@@ -33,9 +33,9 @@ This repository will provide an opinionated deployment to create an environemnt 
 
 Firstly, you should grab the example "ENV.vars" file and update it with your own values (or continue using the user/repo from this repo
 
-replace <GIT_OWNER> with the Git Owner where the repo is being stored, then run the following:
+Set and utilize $GIT_USER var for the user where the repo is being stored, then run the following:
 ```
-git clone https://github.com/<GIT_OWNER>/kubernerdes.lab.git
+git clone https://github.com/${GIT_USER}/kubernerdes.lab.git
 cd kubernerdes.lab
 vi Files/ENV.vars
 . ./Files/ENV.vars
