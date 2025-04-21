@@ -7,21 +7,23 @@
  * @package     
  * @license     MIT
  *
- * @description:  This script was originally created to display the services exposed with type:LoadBalancer
+ * @description:  This script was originally created to display the services exposed with 
+ *                  type:LoadBalancer
  *                I then added top node and top pods
  *                Then, I opted to scan for available *.kubeconfig files and make them a selection
  *
- * Usage:         place this script in /var/www/html and your kubeconfig in /var/www
+ * Usage:         place this script in /var/www/html and your *.kubeconfig(s) in /var/www/.kube/
  *
  * Dependencies:  http server, php, php-yaml
- *                /var/www/html directory
+ *                /var/www/html/, /var/www/.kube/ directory
  * 
- * Note/Warning:  This script is just intended for lab usage.  I would NOT do this on a production cluster,
- *                  or in an environment with sensitive data. 
+ * Note/Warning:  This script is just intended for lab usage.  I would NOT do this on a 
+ *                  production cluster, or in an environment with sensitive data. 
  *                Also, I am not nec. a "coder".  Use at your own risk.  I know that I do ;-)
  *
  * Change log:
- * 2025-04-20 - v1.0.1: All kinds of updates.  Added a section to allow selection of cluster (based on *.kubeconfig files)
+ * 2025-04-20 - v1.0.1: All kinds of updates.  Added a section to allow selection of 
+ *                        cluster (based on *.kubeconfig files)
  * 2025-01-29 - v1.0.0: Initial release
  */
 
