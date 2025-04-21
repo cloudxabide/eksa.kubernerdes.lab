@@ -8,10 +8,10 @@
 #  References: 
 
 # Manually clone
-#git clone https://github.com/GIT_OWNER/eks-workshop.git
-#git clone https://github.com/GIT_OWNER/ecsdemo-frontend.git
-#git clone https://github.com/GIT_OWNER/ecsdemo-nodejs.git
-#git clone https://github.com/GIT_OWNER/ecsdemo-crystal.git
+#git clone https://github.com/$GIT_USER/eks-workshop.git
+#git clone https://github.com/$GIT_USER/ecsdemo-frontend.git
+#git clone https://github.com/$GIT_USER/ecsdemo-nodejs.git
+#git clone https://github.com/$GIT_USER/ecsdemo-crystal.git
 
 cd ${HOME}/eksa/$CLUSTER_NAME/latest
 mkdir ecsdemo; cd $_
@@ -25,9 +25,9 @@ for PROJECT in $PROJECTS
 do
   cd (PROJECT)
   docker build --platform linux/amd64 -t $(basename `pwd`) .
-  docker tag $(basename `pwd`) $GIT_OWNER/$(basename `pwd`)
+  docker tag $(basename `pwd`) $GIT_USER/$(basename `pwd`)
   # You may need/want to add ":latest" to the tag
-  # docker tag $(basename `pwd`) $GIT_OWNER/$(basename `pwd`):latest
+  # docker tag $(basename `pwd`) $GIT_USER/$(basename `pwd`):latest
   docker push $_
   cd -
 done
@@ -38,7 +38,7 @@ kubectl config set-context --current --namespace=ecsdemo
 
 for PROJECT in ecsdemo-nodejs ecsdemo-crystal ecsdemo-frontend
 do 
-  [ -d $PROJECT ] && { cd $PROJECT; git pull; } || { git clone  https://github.com/$GIT_OWNER/$PROJECT; cd $PROJECT; }
+  [ -d $PROJECT ] && { cd $PROJECT; git pull; } || { git clone  https://github.com/$GIT_USER/$PROJECT; cd $PROJECT; }
   kubectl apply -f kubernetes/deployment.yaml
   kubectl apply -f kubernetes/service.yaml
   kubectl get deployment $PROJECT
