@@ -13,6 +13,7 @@
  *                Then, I opted to scan for available *.kubeconfig files and make them a selection
  *
  * Usage:         place this script in /var/www/html and your *.kubeconfig(s) in /var/www/.kube/
+ *                the expectation is that you have cluster1.kubeconfig and bluecluster.kubeconfig, etc..
  *
  * Dependencies:  http server, php, php-yaml
  *                /var/www/html/, /var/www/.kube/ directory
