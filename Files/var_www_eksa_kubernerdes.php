@@ -13,7 +13,6 @@
  *                Then, I opted to scan for available *.kubeconfig files and make them a selection
  *
  * Usage:         place this script in /var/www/html and your *.kubeconfig(s) in /var/www/.kube/
- *                the expectation is that you have cluster1.kubeconfig and bluecluster.kubeconfig, etc..
  *
  * Dependencies:  http server, php, php-yaml
  *                /var/www/html/, /var/www/.kube/ directory
@@ -37,7 +36,7 @@ $verboseTroubleshooting=0;
   <LINK REL="stylesheet" HREF="./styles.css" TYPE="text/css">
 <?php
 // Directory containing kubeconfig files
-$kubeconfig_directory = '/var/www/.kube';
+$kubeconfig_directory = '/srv/www/.kube';
 
 // Holy carp this was tough to figure out... I had *assumed* that if a URL var was present and valid, that it was "set" 
 //        - you have to implicitly set the var based on the $_GET call, apparently
@@ -57,7 +56,7 @@ echo "  <META http-equiv=\"refresh\" content=\"3; url=./kubernerdes.php?kubeconf
 
 <TABLE BORDER=1>
 <TH colspan=2>Kubernerdes Clusters</TH>
-
+<TR><TD><span class="boldPara">Cluster Name</TD><TD><span class="boldPara">Kubeconfig</span></TD></TR>
 <?php
 // Find all files ending with .kubeconfig
 $kubeconfig_files_fullpath = glob($kubeconfig_directory . '/*.kubeconfig');
