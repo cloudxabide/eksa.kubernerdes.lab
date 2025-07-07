@@ -20,6 +20,7 @@
  * Note/Warning:  This script is just intended for lab usage.  I would NOT do this on a 
  *                  production cluster, or in an environment with sensitive data. 
  *                Also, I am not nec. a "coder".  Use at your own risk.  I know that I do ;-)
+ *                security: create .kube/.htaccess in htdocs/html directory with "Deny from all"
  *
  * Change log:
  * 2025-04-20 - v1.0.1: All kinds of updates.  Added a section to allow selection of 
