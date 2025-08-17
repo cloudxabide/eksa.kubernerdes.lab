@@ -103,6 +103,7 @@ EOF6
 kubectl apply -f kubernetes-dashboard-sa-token.yaml
 
 kubectl get secret admin-user -n kubernetes-dashboard -o jsonpath={".data.token"} | base64 -d > kubernetes-dashboard-token.out
+echo $(kubectl get secret admin-user -n kubernetes-dashboard -o jsonpath={".data.token"} |  base64 -d)
 cd -
 
 # NOTE: THIS DOESN'T WORK AS MetalLB has not been enabled yet and therefore kong-proxy does not have a "public" IP
