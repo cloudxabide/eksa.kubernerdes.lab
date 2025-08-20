@@ -1,0 +1,21 @@
+Version: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ${INGRESS_NAME}
+  namespace: ${INGRESS_NAMESPACE}
+  annotations:
+    # For NGINX:
+    # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: ${INGRESS_URL}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ${INGRESS_SVC}
+                port:
+                  number: 80 
